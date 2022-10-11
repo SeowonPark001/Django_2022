@@ -9,9 +9,16 @@
         <a href="/blog/">Blog</a>
     </nav>
 
-    <h1>{{ post.title }}</h1>
+    <h1 class="card-title">{{ post.title }}</h1>
     <h4>{{ post.create_at }}</h4>
+
     <p>{{ post.content }}</p>
+
+    <!-- 첨부 파일이 있는 경우 다운로드 버튼 생성 -->
+    {% if post.file_upload %}
+        <a href="{{ post.file_upload.url }}" class="btn btn-outline-dark" role="button" download>Download</a>
+    {% endif %}
+
     <hr/>
     <h3>댓글 들어올 자리!</h3>
 
