@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+# 9장(정적파일): url 처리
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -26,5 +27,5 @@ urlpatterns = [
     path('', include('single_pages.urls')), # IP주소/single_pages
 ]
 
-# 미디어 파이릉ㄹ 위한 url 지정
-urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+# 9장(정적파일): 미디어 파일을 위한 url 지정
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

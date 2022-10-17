@@ -93,10 +93,14 @@
                 <!-- Featured blog post-->
                 {% for p in post_list %}
                 <div class="card mb-4">
-                    <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                    {% if p.head_image %}
+                        <img class="card-img-top" src="{{ p.head_image.url }}" alt="{{ p }}의 head_image" />
+                    {% else %}
+                        <img class="card-img-top" src="https://picsum.photos/seed/{{ p.id }}/640/360" alt="random image" />
+                    {% endif %}
                     <div class="card-body">
                         <h2 class="card-title">{{ p.title }}</h2>
-                        <p class="card-text">{{ p.content }}</p>
+                        <p class="card-text">{{ p.content | truncatewords:45 }}</p>
                         <a class="btn btn-primary" href="{{ p.get_absolute_url }}">Read more →</a>
                     </div>
                     <div class="card-footer">

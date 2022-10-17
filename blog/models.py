@@ -8,11 +8,13 @@ class Post(models.Model):
     title = models.CharField(max_length=30)
     content = models.TextField()
 
+    # 9장(정적파일): 미디어 파일 저장
     head_image = models.ImageField(upload_to='blog/images/%Y/%m/%d/', blank=True)   # 이미지 파일 저장하는 ImageField
+                                                        # %Y : 2022 // %y : 22
     file_upload = models.FileField(upload_to='blog/files/%Y/%m/%d/', blank=True)    # 파일 업로드를 위한 FileField
 
-    created_at = models.DateTimeField(auto_now_add=True) # 새로 작성 시 auto_now_add
-    update_at = models.DateTimeField(auto_now=True)     # 수정(업데이트) 시 auto_now
+    created_at = models.DateTimeField(auto_now_add=True)    # 새로 작성 시 auto_now_add
+    update_at = models.DateTimeField(auto_now=True)         # 수정(업데이트) 시 auto_now
     #author: 추후 작성 예정
 
     def __str__(self):

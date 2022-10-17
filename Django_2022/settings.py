@@ -10,9 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
-import os
-
 from pathlib import Path
+
+# 9장(정적파일): 경로 다루기
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -123,7 +124,7 @@ USE_TZ = False #True
 
 STATIC_URL = 'static/'
 
-# 업로드한 미디어 파일이 저장될 폴더 지정
+# 9장(정적파일): 업로드한 미디어 파일이 저장될 폴더 지정
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '_media')
 
