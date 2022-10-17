@@ -15,7 +15,7 @@ class PostList(ListView):
 class PostDetail(DetailView):
     model = Post
     # post_detail.html: ListView이 (모델명)_detail.html을 템플릿으로 인지
-    # 매개변수: 모델aud: post
+    # 매개변수: 모델명: post
 
 # FBV
 # def index(request):
