@@ -70,7 +70,7 @@ class TestView(TestCase):
         self.assertEqual(post_001.get_absolute_url(), '/blog/1/')
 
         # 포스트 상세 페이지 가져오기
-        #response = self.client.get('/blog/1/', follow=True)
+        # response = self.client.get('/blog/1/', follow=True)
         response = self.client.get(post_001.get_absolute_url(), follow=True)
         # 응답 코드 확인
         self.assertEqual(response.status_code, 200)
@@ -83,7 +83,7 @@ class TestView(TestCase):
         self.assertIn('About Me', navbar.text) # post_detail.html 과 내용 맞추기 >> 안 그러면 ERROR
 
         # 웹문서의 타이틀이 올바른지 확인 : html 문서의 title 안에 포함되어 있는지
-        self.assertIn(post_001.title, soup.title)
+        self.assertIn(post_001.title, soup.title.text) # soup.title : <title> 태그 포함 >> ERROR
 
         # id로 연결한 div 태그 찾기 - Main, Post, Comment
         main_area = soup.find('div', id='main-area')
