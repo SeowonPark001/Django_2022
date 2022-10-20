@@ -24,7 +24,7 @@
 
         <div class="card-footer">
             <div class="small text-muted">{{ p.created_at }}</div>
-            <a href="#">작성자(추후 개발 예정)</a>
+            <a href="#">{{ p.author | upper }}</a> <!-- upper 처리 >> test 가능 -->
         </div>
     </div>
     {% endfor %}
