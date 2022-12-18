@@ -20,11 +20,23 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+# DRF
+# from rest_framework import routers
+# from Django_2022.blog import views
+#
+# router = routers.DefaultRouter()
+# router.register(r'tests', views.postViewSet)
 
+
+
+# IP주소/~
 urlpatterns = [
     path('admin/', admin.site.urls),        # IP주소/admin
     path('blog/', include('blog.urls')),    # IP주소/blog
-    path('', include('single_pages.urls')), # IP주소/single_pages
+    path('', include('single_pages.urls')), # IP주소/
+    # path('accounts/', include('allauth.urls')), # allauth에서 제공하는 url
+
+    # path('drf/', include(router.urls)),     # DRF
 ]
 
 # 9장(정적파일): 미디어 파일을 위한 url 지정

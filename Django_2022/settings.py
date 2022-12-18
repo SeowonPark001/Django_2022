@@ -28,8 +28,10 @@ SECRET_KEY = 'django-insecure-q_n6w16x=w4&bpes978nrv0m4!^h0g2&)!9wwkh*1p5tq&%n42
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# DRF - 노트북, 아이폰 핫스팟
+# ALLOWED_HOSTS = ['172.20.10.4']
+# 서버 접속
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -40,9 +42,34 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # 16장 외부 라이브러리 (만든 앱 위에) : pip install ~
+    # 'crispy_forms',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.google',
+    #
+    # # DRF
+    # 'rest_framework',
+
+    # 만든 앱 등록
     'blog',
     'single_pages',
 ]
+
+
+# # 16장 외부 라이브러리: 회원가입, 로그인
+# AUTHENTICATION_BACKENDS = (
+#     'django.contrib.auth.backends.ModelBackend',
+#     'allauth.account.auth_backends.AuthenticationBackend'
+# )
+# # 16장: 회원가입, 로그인
+# SITE_ID = 1                         # 지정된 사이트(유저)에서만 로그인 허용 > 아이디 1개만 부여
+# ACCOUNT_EMAIL_REQUIRED = True       # 이메일 필요
+# ACCOUNT_EMAIL_VERIFICATION = 'none' # 검증 X
+# LOGIN_REDIRECT = '/blog/'           # url
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -127,6 +154,9 @@ STATIC_URL = 'static/'
 # 9장(정적파일): 업로드한 미디어 파일이 저장될 폴더 지정
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '_media')
+
+# 16장 외부 라이브러리
+# CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

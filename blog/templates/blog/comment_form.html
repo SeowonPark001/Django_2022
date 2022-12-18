@@ -1,0 +1,28 @@
+<!--&lt;!&ndash; 모듈화 &ndash;&gt;-->
+<!--&lt;!&ndash; blog/base.html 내용 가져오기 &ndash;&gt;-->
+<!--{% extends 'blog/base.html' %}-->
+
+<!--&lt;!&ndash; 16장: Crispy forms 적용 &ndash;&gt;-->
+<!--{% load crispy_forms_tags %}-->
+
+<!--&lt;!&ndash; post page head title &ndash;&gt;-->
+<!--{% block head_title %}-->
+<!--    Edit a Comment - Blog-->
+<!--{% endblock %}-->
+
+<!--&lt;!&ndash; Featured blog post&ndash;&gt;-->
+<!--{% block main_area %}-->
+
+<!--<h1>Edit a Comment</h1>-->
+<!--<hr/>-->
+
+<!--<form method="post" enctype="multipart/form-data">-->
+<!--    {% csrf_token %}-->
+
+<!--    &lt;!&ndash; views.py의 fields > models.py에 내용 있음 &ndash;&gt;-->
+<!--        {{ form | crispy }}  &lt;!&ndash; form이 없으면 crispy 적용 &ndash;&gt;-->
+
+<!--    <button type="submit" class="btn btn-primary float-right">Submit</button>-->
+<!--</form>-->
+
+<!--{% endblock %}-->
