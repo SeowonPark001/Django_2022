@@ -84,17 +84,27 @@
     <h5>아직 게시물이 없습니다.</h5>
 {% endif %}
 
-<!-- Pagination : n페이지 표시 -->
-<nav aria-label="Pagination">
-    <hr class="my-0" />
-    <ul class="pagination justify-content-center my-4">
-        <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
-        <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
-        <li class="page-item"><a class="page-link" href="#!">2</a></li>
-        <li class="page-item"><a class="page-link" href="#!">3</a></li>
-        <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
-        <li class="page-item"><a class="page-link" href="#!">15</a></li>
-        <li class="page-item"><a class="page-link" href="#!">Older</a></li>
-    </ul>
-</nav>
+<!-- 18장: Pagination : n페이지 표시 -->
+<!-- post 개수가 paginated_by(=5)보다 적은 경우 -->
+{% if is_paginated %}
+    <nav aria-label="Pagination">
+        <hr class="my-0" />
+        <ul class="pagination justify-content-center my-4">
+            <!-- 이전 페이지가 있는지 확인 -->
+            {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ page.obj.previous_page_number }}" tabindex="-1" aria-disabled="true">Newer &larr;</a></li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer &larr;</a></li>
+            {% endif %}
+
+            <!-- 다음 페이지가 있는지 확인 -->
+            {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ page.obj.next_page_number }}">&rarr; Older</a></li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link" href="#!">&rarr; Older</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
+
 {% endblock %}
