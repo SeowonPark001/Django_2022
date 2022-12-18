@@ -1,5 +1,8 @@
 <!--navbar + Modal-->
 
+<!-- 16장: Google 로그인 -->
+{% load socialaccount %}
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
     <a class="navbar-brand" href="/">Internet Programming</a> <!-- #: 자기 자신 -->
@@ -20,30 +23,31 @@
             <li class="nav-item">
                 <a class="nav-link" href="/about_me/">About Me</a> <!-- urls.py에 적어둔 대로 경로 바꿔주기 -->
             </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            {% if user.is_authenticated %}
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown link
-
+                    {{ user.username }}
 <!--                    {% if user.socialaccount_set.all.0.get_avatar_url %}-->
 <!--                        <img class="rounded-circle mr-3" src="{{user.socialaccount_set.all.0.get_avatar_url}}" width="25px">-->
 <!--                    {% else %}-->
 <!--                        <img class="rounded-circle mr-3" src="" width="25px">-->
 <!--                    {% endif %}-->
-
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                    <a class="dropdown-item" href="/accounts/logout">Logout</a>
                 </div>
             </li>
 
-            <li class="nav-item float-right">                               <!-- 해당 id 값의 Modal창 이용 -->
+            {% else %}
+            <li class="nav-item ml-auto">                        <!-- 해당 id 값의 Modal창 이용 -->
                 <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">
                     Login
                 </a>
             </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
@@ -52,6 +56,7 @@
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
+
             <!-- Modal Header -->
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">
@@ -61,18 +66,16 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+
             <!-- Modal Body -->
             <div class="modal-body">
                 <div class="row">
                     <div class="col-6">
-<!--                        <button type="button" class="btn btn-outline-dark btn-block btn-sm">-->
-<!--                            <i class="fa-brands fa-google"></i> Log in with Google-->
-<!--                        </button>-->
+                        <!-- <button type="button" class="btn btn-outline-dark btn-block btn-sm">-->
 
                         <!-- # Google Login -->
                         <a role="button" class="btn btn-outline-dark btn-block btn-sm"
-                           href="#">
-                        <!--href="{ % provider_login_url 'google' % }">-->
+                           href="{% provider_login_url 'google' %}"> <!-- href="#" -->
                             <i class="fa-brands fa-google"></i> Log in with Google
                         </a>
                         <!-- # Email Login -->
@@ -90,6 +93,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- Modal Footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -34,9 +34,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),        # IP주소/admin
     path('blog/', include('blog.urls')),    # IP주소/blog
     path('', include('single_pages.urls')), # IP주소/
-    # path('accounts/', include('allauth.urls')), # allauth에서 제공하는 url
 
-    # path('drf/', include(router.urls)),     # DRF
+    # 16장: allauth에서 제공하는 url => migrate만!
+    path('accounts/', include('allauth.urls')), # IP주소/accounts/
+
+    # DRF
+    # path('drf/', include(router.urls)),       # IP주소/drf/
 ]
 
 # 9장(정적파일): 미디어 파일을 위한 url 지정

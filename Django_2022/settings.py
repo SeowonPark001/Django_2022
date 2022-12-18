@@ -43,15 +43,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # 16장 외부 라이브러리 (만든 앱 위에) : pip install django-crispy-forms
+    # 16장 외부 라이브러리 (만든 앱 위에)
+    # pip install django-crispy-forms
     'crispy_forms',
+    # pip install django-allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 
-    # 'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
-    # 'allauth.socialaccount.providers.google',
-
-    # # DRF
+    # DRF
     # 'rest_framework',
 
     # 만든 앱 등록
@@ -59,17 +60,15 @@ INSTALLED_APPS = [
     'single_pages',
 ]
 
-
-# # 16장 외부 라이브러리: 회원가입, 로그인
-# AUTHENTICATION_BACKENDS = (
-#     'django.contrib.auth.backends.ModelBackend',
-#     'allauth.account.auth_backends.AuthenticationBackend'
-# )
-# # 16장: 회원가입, 로그인
-# SITE_ID = 1                         # 지정된 사이트(유저)에서만 로그인 허용 > 아이디 1개만 부여
-# ACCOUNT_EMAIL_REQUIRED = True       # 이메일 필요
-# ACCOUNT_EMAIL_VERIFICATION = 'none' # 검증 X
-# LOGIN_REDIRECT = '/blog/'           # url
+# 16장 allauth: 회원가입, 로그인
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
+)
+SITE_ID = 1                         # 지정된 사이트(유저)에서만 로그인 허용 > 아이디 1개만 부여
+ACCOUNT_EMAIL_REQUIRED = True       # 이메일 필요 ㅇ
+ACCOUNT_EMAIL_VERIFICATION = 'none' # 이메일 인증 X
+LOGIN_REDIRECT_URL = '/blog/'       # 소셜 로그인 후 나타낼 url
 
 
 MIDDLEWARE = [
