@@ -145,41 +145,41 @@ class PostList(ListView):
 class PostDetail(DetailView):
     model = Post
     # post_detail.html: ListView이 (모델명)_detail.html을 템플릿으로 인지
-    # 매개변수 모델명: post
 
-    # 13장 카테고리 context 데이터 전달
+    # 13장: 카테고리 context 데이터 전달
     def get_context_data(self, **kwargs):
         context = super(PostDetail, self).get_context_data()
         context['categories'] = Category.objects.all()
         context['no_category_post_count'] = Post.objects.filter(category=None).count
-        context['comment_form'] = CommentForm   # 추가
+        context['comment_form'] = CommentForm   # 추가 (17장)
         return context
 
-    # # 새 댓글 작성하기
-    # def new_comment(request, pk):
-    #     # 로그인한 유저인 경우
-    #     if request.user.is_authenticated:
-    #         post = get_object_or_404(Post, pk=pk)
-    #
-    #         # 요청 형식이 POST인 경우
-    #         if request.method == 'POST':
-    #             comment_form = CommentForm(request.POST)
-    #
-    #             if comment_form.is_valid():
-    #                 comment = comment_form.save(commit=False)
-    #                 comment.post = post
-    #                 comment.author = request.user
-    #                 comment.save() # 서버 model에 save
-    #                 return redirect(comment.get_absolute_url()) # 해당 url로 이동
-    #         # 요청 형식이 POST가 아닌 경우 : GET
-    #         else:
-    #             return redirect(post.get_absolute_url()) # post 상세 페이지로 이동
-    #     # 로그인 X 사용자인 경우
-    #     else:
-    #         raise PermissionDenied
 
+# 카테고리&태그&댓글: PostDetail 안x 밖ㅇ (카테고리, 태그 => PostList에서도 사용ㅇ)
 
-# 카테고리&태그: PostList에서도 사용ㅇ => PostDetail 안x 밖ㅇ
+# 17장 CommentForm: 새 댓글 작성하기
+def new_comment(request, pk):
+    # 로그인한 유저인 경우
+    if request.user.is_authenticated:
+        post = get_object_or_404(Post,pk=pk)
+
+        # 요청 형식이 POST인 경우
+        if request.method == 'POST':
+            comment_form = CommentForm(request.POST)
+
+            if comment_form.is_valid():
+                comment = comment_form.save(commit=False)
+                comment.post = post
+                comment.author = request.user
+                comment.save() # 서버 model에 save
+                return redirect(comment.get_absolute_url()) # 해당 url로 이동
+        # 요청 형식이 POST가 아닌 경우 : GET
+        else:
+            return redirect(post.get_absolute_url()) # 포스트 상세 페이지로 이동
+    # 로그인 X 사용자인 경우
+    else:
+        raise PermissionDenied
+
 
 # 13장 다대일: Category 페이지
 def category_page(request, slug):  # <- slug: 매개변수로 갖고옴
@@ -207,7 +207,7 @@ def tag_page(request, slug):
     return render(request, 'blog/post_list.html', {
         'tag': tag,
         'post_list': post_list,  # 미분류 때문에 미리 변수에 할당 / Post.objects.filter(category=category)
-        # sidebar의 category
+        # side bar의 category
         'categories': Category.objects.all(),
         'no_category_post_count': Post.objects.filter(category=None).count
     })

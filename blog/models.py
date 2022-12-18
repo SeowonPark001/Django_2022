@@ -33,7 +33,7 @@ class Category(models.Model):
     def get_absolute_url(self):
         return f'/blog/category/{self.slug}/'   # localhost:8000/blog/category/a/
 
-    # 클래스 안의 클래스: 특정 값을
+    # 클래스 안의 클래스: 특정 값을 지정
     class Meta:
         verbose_name_plural = 'Categories'
 
@@ -67,9 +67,9 @@ class Post(models.Model):
 
     def __str__(self):
         # {self.pk} : 해당 포스트 pk 값 // {self.title} : 해당 포스트의 title 값
-        # {self.pk}] {self.title}    {self.created_at}'   # ex) [1] Post_title_1  2022.01.01 00:00:00
-       return f'[{self.pk}] {self.title}::{self.author} _ {self.created_at}'
+       return f'[{self.pk}] {self.title}::{self.author} _ {self.created_at}' # ex) [1] Post_title_1::작성자  2022.01.01 00:00:00
 
+    # admin 페이지의 [view on site] 연결
     def get_absolute_url(self):
         return f'/blog/{self.pk}/'  # localhost:8000/blog/1
 
@@ -81,9 +81,6 @@ class Post(models.Model):
     def get_file_ext(self): # 파일 확장자 얻기
         return self.get_file_name().split('.')[-1]      # -1: 제일 마지막에 해당하는 단어 (=확장자 ex. txt, xls, pdf, ...)
 
-    # 18장 기타 편의 기능 - 아바타 이미지
-    # def get_avatar_url(self):
-    #     if self.author.socialaccount_set.exists():
 
 
 # 17장 댓글 (다대일) - Post 모델 밑에 작성
@@ -97,9 +94,7 @@ class Comment(models.Model):
     def __str__(self):
         return f'{self.author} : {self.content}'    # 작성자 : 댓글내용
 
+    # admin 페이지의 [view on site] 연결
     def get_absolute_url(self):
         return f'{self.post.get_absolute_url()}#comment-{self.pk}' # 샵(#) 뒤: 해당 id 값의 태그로 이동
 
-    # 18장 기타 편의 기능 - 아바타 이미지
-    # def get_avatar_url(self):
-    #     if self.author.socialaccount_set.exists():

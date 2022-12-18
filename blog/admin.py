@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 # 관리자 페이지에 모델 등록
 
-from .models import Post, Category, Tag #, Comment
+from .models import Post, Category, Tag, Comment
 
 # Register Posts
 admin.site.register(Post)
@@ -22,5 +22,5 @@ class TagAdmin(admin.ModelAdmin):
 admin.site.register(Tag, TagAdmin)
 
 
-# # 17장? 댓글 모델 등록
-# admin.site.register(Comment)
+# 17장: 댓글 모델 등록
+admin.site.register(Comment)
