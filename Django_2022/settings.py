@@ -43,13 +43,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # 16장 외부 라이브러리 (만든 앱 위에) : pip install ~
-    # 'crispy_forms',
+    # 16장 외부 라이브러리 (만든 앱 위에) : pip install django-crispy-forms
+    'crispy_forms',
+
     # 'allauth',
     # 'allauth.account',
     # 'allauth.socialaccount',
     # 'allauth.socialaccount.providers.google',
-    #
+
     # # DRF
     # 'rest_framework',
 
@@ -156,7 +157,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, '_media')
 
 # 16장 외부 라이브러리
-# CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
