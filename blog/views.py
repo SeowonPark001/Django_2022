@@ -79,46 +79,47 @@ class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
 
 
-# 이미 존재하는 포스트 수정
-# class PostUpdate(LoginRequiredMixin, UpdateView):
-#     model = Post
-#     fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category', 'tags']  # 등록글 속성들, 똑같이 적기
-#     template_name = 'blog/post_update_form.html'
-#
-#
-#     def get_context_data(self, object_list=None, **kwargs):
-#         context = super(PostUpdate, self).get_context_data()
-#         if self.object.tags.exists:
-#             tag_str_list = list()
-#             for t in self.object.tags.all():
-#                 tag_str_list.append(t.name)
-#             context['tags_str_default'] = ';'.join(tag_str_list)
-#         context['categories'] = Category.objects.all()
-#         context['no_category_post_count'] = Post.objects.filter(category=None).count
-#         return context
-#
-#     def dispatch(self, request, *args, **kwargs):
-#         if request.user.is_authenticated and request.user == self.get_object().author:
-#             return super(PostUpdate, self).dispatch(request, *args, **kwargs)
-#         else:
-#             raise PermissionDenied  # Exception 발생
-#
-#     def form_valid(self, form):
-#         response = super(PostUpdate, self).form_valid(form)
-#         self.object.tags.clear() # 기존 태그들을 삭제 후 새 태그들 등록
-#         tags_str = self.POST.get('tags_str')
-#         if tags_str:
-#             tags_str = tags_str.strip()
-#             tags_str, is_created = tags_str.replace(',', ';')  # true: / false: 원래 애방
-#             tag_list = tags_str.split(';')
-#             for t in tag_list:
-#                 t = t.strip()
-#                 tag, is_tag_created = Tag.objects.get_or_create(name=t)
-#                 if is_tag_created:
-#                     tag.slug = slugify(t, allow_unicode=True)
-#                     tag.save()
-#                 self.object.tags.add(tag)
-#         return response
+# 15장 이미 존재하는 포스트 수정
+class PostUpdate(LoginRequiredMixin, UpdateView):
+    model = Post
+    fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category', 'tags']  # 등록글 속성들, 똑같이 적기
+    template_name = 'blog/post_update_form.html'
+
+
+    def get_context_data(self, object_list=None, **kwargs):
+        context = super(PostUpdate, self).get_context_data()
+        if self.object.tags.exists:
+            tag_str_list = list()
+            for t in self.object.tags.all():
+                tag_str_list.append(t.name)
+            context['tags_str_default'] = ';'.join(tag_str_list)
+        context['categories'] = Category.objects.all()
+        context['no_category_post_count'] = Post.objects.filter(category=None).count
+        return context
+
+    # 요청 사용자가 권한ㅇ => 포스트 수정하기 페이지 보내기(dispatch)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user == self.get_object().author:
+            return super(PostUpdate, self).dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied  # Exception 발생
+
+    # def form_valid(self, form):
+    #     response = super(PostUpdate, self).form_valid(form)
+    #     self.object.tags.clear() # 기존 태그들을 삭제 후 새 태그들 등록
+    #     tags_str = self.POST.get('tags_str')
+    #     if tags_str:
+    #         tags_str = tags_str.strip()
+    #         tags_str, is_created = tags_str.replace(',', ';')  # true: / false: 원래 애방
+    #         tag_list = tags_str.split(';')
+    #         for t in tag_list:
+    #             t = t.strip()
+    #             tag, is_tag_created = Tag.objects.get_or_create(name=t)
+    #             if is_tag_created:
+    #                 tag.slug = slugify(t, allow_unicode=True)
+    #                 tag.save()
+    #             self.object.tags.add(tag)
+    #     return response
 
 
 

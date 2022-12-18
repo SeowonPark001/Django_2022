@@ -14,7 +14,7 @@ urlpatterns = [ # ip주소/blog/
 
     # 15장 Form
     path('create_post/', views.PostCreate.as_view()),   # IP주소/blog/create_post
-    # path('update_post/<int:pk>/', views.PostUpdate.as_view()),  # IP주소/blog/update_post/1
+    path('update_post/<int:pk>/', views.PostUpdate.as_view()),  # IP주소/blog/update_post/1
 
     # 16장? Comment
     # path('<int:pk>/new_comment/', views.new_comment),  # IP주소/blog/1/new_comment/ : post의 pk

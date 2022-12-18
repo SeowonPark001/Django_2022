@@ -43,12 +43,13 @@
         </header>
 
         <!-- Edit Button -->
-        <!-- user.is_authenticated : 로그인되어 있는지 -->
-<!--        {% if user.is_authenticated and user == post.author %}-->
-<!--            <a class="btn btn-info float-right" href="/blog/update_post/{{post.pk}}/" role="button">-->
-<!--                <i class="fas fa-pen">Edit Post</i>-->
-<!--            </a>-->
-<!--        {% endif %}-->
+        <!--user.is_authenticated : 로그인되어 있는지-->
+        {% if user.is_authenticated and user == post.author %}
+            <a class="btn btn-info float-right" href="/blog/update_post/{{ post.pk }}/" role="button">
+                <i class="fas fa-pen">Edit Post</i>
+            </a>
+        {% endif %}
+        <br>
 
         <!-- Preview image figure-->
         <figure class="mb-4">
