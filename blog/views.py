@@ -172,21 +172,8 @@ class PostDetail(DetailView):
     #         raise PermissionDenied
 
 
-    # 14장 다대다 : Tag 페이지
-    # def tag_page(request, slug):
-    #     tag = Tag.objects.get(slug=slug)
-    #     post_list = tag.post_set.all()
-    #
-    #     return render(request, 'blog/post_list.html', {
-    #         # 12:45~ 다시
-    #         'tag': tag,
-    #         'post_list': post_list,  # 미분류 때문에 미리 변수에 할당 / Post.objects.filter(category=category)
-    #         'categories': Category.objects.all(),
-    #         'no_category_post_count': Post.objects.filter(category=None).count
-    #     })
+# 카테고리&태그: PostList에서도 사용ㅇ => PostDetail 안x 밖ㅇ
 
-
-# PostDetail 안x 밖ㅇ: PostList에서도 사용ㅇ
 # 13장 다대일: Category 페이지
 def category_page(request, slug):  # <- slug: 매개변수로 갖고옴
     # slug1[ERROR]: 221027강의 33:00~ 그 이후에 다시 고침...
@@ -204,6 +191,19 @@ def category_page(request, slug):  # <- slug: 매개변수로 갖고옴
         'no_category_post_count': Post.objects.filter(category=None).count
     })
 
+
+# 14장 다대다 : Tag 페이지
+def tag_page(request, slug):
+    tag = Tag.objects.get(slug=slug)
+    post_list = tag.post_set.all()
+
+    return render(request, 'blog/post_list.html', {
+        'tag': tag,
+        'post_list': post_list,  # 미분류 때문에 미리 변수에 할당 / Post.objects.filter(category=category)
+        # sidebar의 category
+        'categories': Category.objects.all(),
+        'no_category_post_count': Post.objects.filter(category=None).count
+    })
 
 
 # FBV

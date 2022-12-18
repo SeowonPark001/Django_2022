@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 # 모델 구현
 
-# 14장 다대다 : Tag 모델
+# 14장 다대다 : 태그 모델
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
@@ -62,7 +62,7 @@ class Post(models.Model):
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
                                                     # blank: admin/form에서 공란 허용
     # 14장 다대다 관계: 태그
-    # tags = models.ManyToManyField(Tag, blank=True) # null 설정, on_delete 설정 할 필요 X 이미 되어있음
+    tags = models.ManyToManyField(Tag, blank=True) # null 설정, on_delete 설정 할 필요 X 이미 되어있음
 
 
     def __str__(self):
