@@ -26,11 +26,11 @@
 <!--        <input id="id_tags" type="text" name="tags_str" value="{{ tags_str_default }}" class="textinput textInput form-control">-->
 <!--    </div>-->
 
-        <!-- select -> text 입력창으로 변환 -->
-<!--        <tr> &lt;!&ndash; , ; 으로 태그 구분 &ndash;&gt;-->
-<!--            <th><label for="id_tags">Tags</label></th>-->
-<!--            <td><input id="id_tags" type="text" name="tags_str" value="{{ tags_str_default }}"></td>-->
-<!--        </tr>-->
+        <!-- 태그 입력: [,], [;] 으로 구분 -->
+        <tr> <!-- select -> text 입력창으로 변환 -->
+            <th><label for="id_tags">Tags: </label></th>
+            <td><input id="id_tags" type="text" name="tags_str" value="{{ tags_str_default }}"></td> <!-- view.py 내용와 같은 이름 -->
+        </tr>
     </table>
     <button type="submit" class="btn btn-primary float-right">Submit</button>
 </form>

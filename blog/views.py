@@ -35,7 +35,7 @@ from .serializers import postSerializer
 # 15장 : Form
 class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Post
-    fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category']  # 등록글 속성들, , 'tags'
+    fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category']  # 등록글 속성들 , 'tags' << 추가하고 다시 없애기!!!
 
     # post_form.html: CreateView가 (모델명)_form.html을 템플릿으로 인지
 
@@ -54,24 +54,23 @@ class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         if current_user.is_authenticated and (current_user.is_superuser or current_user.is_staff):
             # 해당 사용자를 폼에 해당하는 작성자로 간주
             form.instance.author = current_user
-            return super(PostCreate, self).form_valid(form)
-
-            # response = super(PostCreate, self).form_valid()
-            # tags_str = self.POST.get('tags_str')
-            # if tags_str:
-            #     tags_str = tags_str.strip()
-            #     tags_str, is_created = tags_str.replace(',',';') # true: / false: 원래 애방
-            #     tag_list = tags_str.split(';')
-            #     for t in tag_list:
-            #         t = t.strip()
-            #         tag, is_tag_created = Tag.objects.get_or_create(name=t)
-            #         if is_tag_created:
-            #             tag.slug = slugify(t, allow_unicode=True)
-            #             tag.save()
-            #         self.object.tags.add(tag)
-            # return response # super(PostCreate, self).form_valid(form)
+            response = super(PostCreate, self).form_valid(form)
+            # 태그 입력
+            tags_str = self.request.POST.get('tags_str')
+            if tags_str: # true: / false: 원래 애방
+                tags_str = tags_str.strip()             # 문자열의 전체 앞뒤 여백 제거
+                tags_str = tags_str.replace(',',';')    # [,]->[;]으로 변환 , is_created
+                tag_list = tags_str.split(';')          # [;] 기준으로 문자열 분리 >> 배열
+                for t in tag_list:
+                    t = t.strip()
+                    tag, is_tag_created = Tag.objects.get_or_create(name=t)
+                    if is_tag_created:
+                        tag.slug = slugify(t, allow_unicode=True)
+                        tag.save()
+                    self.object.tags.add(tag)
+            return response             # super(PostCreate, self).form_valid(form)
         else:
-            return redirect('/blog/')  # 인증된 사용자가 아닌 경우 blog 페이지로 이동
+            return redirect('/blog/')   # 인증된 사용자가 아닌 경우 blog 페이지로 이동
 
     # (UserPassesTestMixin)
     def test_func(self):
@@ -82,12 +81,13 @@ class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 # 15장 이미 존재하는 포스트 수정
 class PostUpdate(LoginRequiredMixin, UpdateView):
     model = Post
-    fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category', 'tags']  # 등록글 속성들, 똑같이 적기
+    fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category']  # 등록글 속성들, 똑같이 적기 , 'tags'
     template_name = 'blog/post_update_form.html'
 
 
     def get_context_data(self, object_list=None, **kwargs):
         context = super(PostUpdate, self).get_context_data()
+        # 태그 입력 - 기존 태그에 입력한 새 태그 추가
         if self.object.tags.exists:
             tag_str_list = list()
             for t in self.object.tags.all():
@@ -104,22 +104,23 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
         else:
             raise PermissionDenied  # Exception 발생
 
-    # def form_valid(self, form):
-    #     response = super(PostUpdate, self).form_valid(form)
-    #     self.object.tags.clear() # 기존 태그들을 삭제 후 새 태그들 등록
-    #     tags_str = self.POST.get('tags_str')
-    #     if tags_str:
-    #         tags_str = tags_str.strip()
-    #         tags_str, is_created = tags_str.replace(',', ';')  # true: / false: 원래 애방
-    #         tag_list = tags_str.split(';')
-    #         for t in tag_list:
-    #             t = t.strip()
-    #             tag, is_tag_created = Tag.objects.get_or_create(name=t)
-    #             if is_tag_created:
-    #                 tag.slug = slugify(t, allow_unicode=True)
-    #                 tag.save()
-    #             self.object.tags.add(tag)
-    #     return response
+    def form_valid(self, form):
+        response = super(PostUpdate, self).form_valid(form)
+        self.object.tags.clear()    # 기존 태그들을 삭제 후 새 태그들 등록
+        # 태그 입력
+        tags_str = self.request.POST.get('tags_str')
+        if tags_str:
+            tags_str = tags_str.strip()             # 문자열의 전체 앞뒤 여백 제거
+            tags_str = tags_str.replace(',', ';')   # [,]->[;]으로 변환 , is_created
+            tag_list = tags_str.split(';')          # [;] 기준으로 문자열 분리 >> 배열
+            for t in tag_list:
+                t = t.strip()
+                tag, is_tag_created = Tag.objects.get_or_create(name=t)
+                if is_tag_created:
+                    tag.slug = slugify(t, allow_unicode=True)
+                    tag.save()
+                self.object.tags.add(tag)
+        return response
 
 
 
