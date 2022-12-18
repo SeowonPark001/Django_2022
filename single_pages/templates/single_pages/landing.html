@@ -20,7 +20,7 @@
     <!-- Bootstrap NavBar + Modal -->
     {% include 'blog/navbar.html' %}    <!-- include: 해당 파일을 그대로 복붙 -->
 
-    <section>
+    <section> <!-- landing.css에 맞게 section 추가 -->
     <!-- Post Content -->
         <div class="container">
             <div class="row justify-content-between">
@@ -31,25 +31,26 @@
                     <h5>간단 설명</h5>
                 </div>
 
-                <!-- 오른쪽 최근 포스트 3개-->
+                <!-- 오른쪽에 최근 포스트 3개 배치 -->
                 <div class="col-lg-5">
                     <h2 class="text-light">Recent Posts</h2>
 
                     {% for post in recent_posts %}
-                    <div class="card-mt-1">
-                        <div class="card-body">
-                            <h6>
-                                <a href="{{ post.get_absolute_url }}" class="text-decoration-none text-dark">
-                                    {{ post.title }}
-                                </a>
-                            </h6>
-                            <span class="badge badge-pill badge-light float-right">
-                                <img src="{{ post.author.get_avatar_url }}" class="mr-1 rounded-circle" width="20px">
-                                {{ post.author.username }}    {{ post.created_at }}
-                            </span>
+                        <div class="card mt-1">
+                            <div class="card-body">
+                                <h6>
+                                    <a href="{{ post.get_absolute_url }}" class="text-decoration-none text-dark">
+                                        {{ post.title }}
+                                    </a>
+                                </h6>
+                                <span class="badge badge-pill badge-light float-right">
+                                    <img src="{{ post.get_avatar_url }}" class="mr-1 rounded-circle" width="20px">
+                                    {{ post.author.username }}    {{ post.created_at }}
+                                </span>
+                            </div>
                         </div>
-                    </div>
                     {% endfor %}
+
                 </div>
             </div>
         </div>

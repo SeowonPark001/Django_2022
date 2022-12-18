@@ -81,6 +81,13 @@ class Post(models.Model):
     def get_file_ext(self): # 파일 확장자 얻기
         return self.get_file_name().split('.')[-1]      # -1: 제일 마지막에 해당하는 단어 (=확장자 ex. txt, xls, pdf, ...)
 
+    # 18장 아바타 이미지
+    def get_avatar_url(self):
+        if self.author.socialaccount_set.exists(): # 여러 개의 소셜 계정으로 로그인 시
+            return self.author.socialaccount_set.first().get_avatar_url() # 구글
+        else: # 이메일/admin 로그인 시
+            return 'https://dummyimage.com/50x50/ced4da/6c757d.jpg'
+
 
 
 # 17장 댓글 (다대일) - Post 모델 밑에 작성
