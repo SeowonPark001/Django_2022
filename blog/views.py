@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from rest_framework import viewsets
-
 from .models import Post, Category, Tag, Comment
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -19,17 +18,19 @@ from .serializers import postSerializer
 #     serializer_class = postSerializer
 
 
-# 16장 Comment 수정하기
-# class CommentUpdate(LoginRequiredMixin, UpdateView):
-#     model = Comment
-#     form_class = CommentForm
-#     # comment_form
-#
-#     def dispatch(self, request, *args, **kwargs):
-#         if request.user.is_authenticated and request.user == self.get_object().author:
-#             return super(CommentUpdate, self).dispatch(request, *args, **kwargs)
-#         else:
-#             raise PermissionDenied  # Exception 발생
+# 17장 Comment Form: 댓글 수정하기
+class CommentUpdate(LoginRequiredMixin, UpdateView):
+    model = Comment
+    form_class = CommentForm
+    # comment_form.html: UpdateView가 (모델명)_form.html을 템플릿으로 인지
+
+    # 요청 사용자가 권한ㅇ => 댓글 수정하기 페이지 보내기(dispatch)
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user == self.get_object().author:
+            return super(CommentUpdate, self).dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied  # Exception 발생
+
 
 
 # 15장 : Form

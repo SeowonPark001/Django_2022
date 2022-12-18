@@ -18,7 +18,7 @@ urlpatterns = [ # ip주소/blog/
 
     # 17장 Comment Form
     path('<int:pk>/new_comment/', views.new_comment),  # IP주소/blog/post의 pk/new_comment/
-    # path('update_comment/<int:pk>', views.CommentUpdate.as_view()),  # IP주소/blog/update_comment/1 : comment의 pk
+    path('update_comment/<int:pk>/', views.CommentUpdate.as_view()),  # IP주소/blog/update_comment/1 : comment의 pk
 
 
     # FBV
