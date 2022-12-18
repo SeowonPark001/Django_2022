@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from rest_framework import viewsets
 from .models import Post, Category, Tag, Comment
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -9,14 +8,27 @@ from .forms import CommentForm
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from .serializers import postSerializer
+from rest_framework import viewsets
 
 # Creates your view here.
 
 
 # DRF (Django Rest Framework)
-# class postViewSet(viewsets.ModelViewSet):
-#     queryset = Post.objects.all()
-#     serializer_class = postSerializer
+class postViewSet(viewsets.ModelViewSet):
+    # (검색)결과
+    queryset = Post.objects.all()
+    serializer_class = postSerializer
+
+# DRF - 댓글 삭제 기능
+def delete_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    post = comment.post
+    # 삭제 다시 확인
+    if request.user.is_authenticated and request.user == comment.author:
+        comment.delete()
+        return redirect(post.get_absolute_url())
+    else:
+        PermissionDenied
 
 
 # 17장 Comment Form: 댓글 수정하기

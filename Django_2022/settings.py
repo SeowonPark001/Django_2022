@@ -28,10 +28,10 @@ SECRET_KEY = 'django-insecure-q_n6w16x=w4&bpes978nrv0m4!^h0g2&)!9wwkh*1p5tq&%n42
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# DRF - 노트북, 아이폰 핫스팟
-# ALLOWED_HOSTS = ['172.20.10.4']
+# DRF - 노트북, 아이폰 핫스팟 등
+ALLOWED_HOSTS = ['192.168.235.1']
 # 서버 접속
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 
     # DRF
-    # 'rest_framework',
+    'rest_framework',
 
     # 만든 앱 등록
     'blog',

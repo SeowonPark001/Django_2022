@@ -23,6 +23,10 @@ urlpatterns = [ # ip주소/blog/
     # 18장 검색 기능 - 검색어: 'q'uery
     path('search/<str:q>/', views.PostSearch.as_view()),  # IP주소/search/검색어
 
+    # DRF
+    path('delete_comment/<int:pk>/', views.delete_comment), # IP주소//blog/delete_comment/1 : comment의 pk
+
+
     # FBV
     # path('', views.index),           # views.py 의 index 함수 내 포함되어있는 path
     # path('<int:pk>/', views.single_post_page),   # single_post_page 함수 내 포함되어있는 path

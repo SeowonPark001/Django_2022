@@ -90,8 +90,8 @@
     <!-- 그래프 그리기 js으로 구현 -->
     <script>
     // 그래프 1 (mychart1) 그리기
-        // google.charts.load('current', {'packages':['bar']}); // Bar 그래프
-        google.charts.load('current', {'packages':['line']});   // Line 그래프
+        google.charts.load('current', {'packages':['bar']}); // Bar 그래프
+        //google.charts.load('current', {'packages':['line']});   // Line 그래프
         google.charts.setOnLoadCallback(drawChart); // ()안: 함수 이름
 
         function drawChart() {
@@ -108,10 +108,10 @@
                     subtitle: 'Sales, Expenses, Profit : 2014-2017',
                 }
             };
-            // var chart = new google.charts.Bar(document.getElementById('mychart1')); // 해당 id값의 태그 내
-            // chart.draw(data, google.charts.Bar.convertOptions(options));
-            var chart = new google.charts.Line(document.getElementById('mychart1')); // 해당 id값의 태그 내
-            chart.draw(data, google.charts.Line.convertOptions(options));
+            var chart = new google.charts.Bar(document.getElementById('mychart1')); // 해당 id값의 태그 내
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+            //var chart = new google.charts.Line(document.getElementById('mychart1')); // 해당 id값의 태그 내
+            //chart.draw(data, google.charts.Line.convertOptions(options));
         };
 
 

@@ -21,11 +21,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 # DRF
-# from rest_framework import routers
-# from Django_2022.blog import views
-#
-# router = routers.DefaultRouter()
-# router.register(r'tests', views.postViewSet)
+from rest_framework import routers
+from blog import views  # Problems 오류 무시하기...
+# 라우터 <- postViewSet(결과값) 넣기
+router = routers.DefaultRouter()
+router.register(r'tests', views.postViewSet)
 
 
 
@@ -39,7 +39,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')), # IP주소/accounts/
 
     # DRF
-    # path('drf/', include(router.urls)),       # IP주소/drf/
+    path('drf/', include(router.urls)),     # IP주소/drf/tests
 ]
 
 # 9장(정적파일): 미디어 파일을 위한 url 지정
