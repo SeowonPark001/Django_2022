@@ -98,3 +98,10 @@ class Comment(models.Model):
     def get_absolute_url(self):
         return f'{self.post.get_absolute_url()}#comment-{self.pk}' # 샵(#) 뒤: 해당 id 값의 태그로 이동
 
+    # 18장 아바타 이미지
+    def get_avatar_url(self):
+        if self.author.socialaccount_set.exists(): # 여러 개의 소셜 계정으로 로그인 시
+            return self.author.socialaccount_set.first().get_avatar_url() # 구글
+        else: # 이메일/admin 로그인 시
+            return 'https://dummyimage.com/50x50/ced4da/6c757d.jpg'
+

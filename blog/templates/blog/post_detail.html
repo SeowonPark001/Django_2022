@@ -124,7 +124,8 @@
                     {% for comment in post.comment_set.iterator %} <!-- 반복: iterator -->
                         <div class="media d-flex" id="comment-{{comment.pk}}"> <!-- class: 맨 앞에 media 추가 -->
 <!--                            <div class="flex-shrink-0">-->
-                                <img class="rounded-circle mr-3" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="user's profile image"/>
+<!--                                <img class="rounded-circle mr-3" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="user's profile image"/>-->
+                                <img class="rounded-circle mr-3" src="{{ comment.get_avatar_url }}" alt="{{ comment.author }}" width="30px"/>
 <!--                            </div>-->
                             <div class="media-body ms-3"> <!-- class: 맨 앞에 media-body 추가 -->
                                 <!-- 로그인 한 사용자인 경우: 댓글 수정 기능 -->
