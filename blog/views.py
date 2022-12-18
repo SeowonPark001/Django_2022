@@ -7,12 +7,13 @@ from django.core.exceptions import PermissionDenied
 from django.utils.text import slugify
 from .forms import CommentForm
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 from .serializers import postSerializer
 
 # Creates your view here.
 
 
-# DRF
+# DRF (Django Rest Framework)
 # class postViewSet(viewsets.ModelViewSet):
 #     queryset = Post.objects.all()
 #     serializer_class = postSerializer
@@ -155,7 +156,27 @@ class PostDetail(DetailView):
         return context
 
 
-# 카테고리&태그&댓글: PostDetail 안x 밖ㅇ (카테고리, 태그 => PostList에서도 사용ㅇ)
+# 18장 검색 기능 - PostList 밑에 작성
+class PostSearch(PostList): # ListView 상속, post_list, post_list.html
+    paginate_by = None
+
+    # 검색어 -> set
+    def get_queryset(self):
+        q = self.kwargs['q']    # 'q'라는 인자를 받아와서 가져옴
+        post_list = Post.objects.filter(    # Q: 여러 조건 사용
+            Q(title__contains=q) | Q(tags__name__contains=q) # = tags.name.contains(파이썬 문법)
+        ).distinct()    # 중복으로 검색되는 요소가 있을 경우, 하나만 남김
+        return post_list
+
+    # Context 데이터 전달
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(PostSearch, self).get_context_data()
+        q = self.kwargs['q']
+        context['search_info'] = f'Search: {q} ({self.get_queryset().count()})'
+        return context
+
+
+# 카테고리 & 태그 & 댓글: PostDetail 안x 밖ㅇ (카테고리, 태그 => PostList에서도 사용ㅇ)
 
 # 17장 CommentForm: 새 댓글 작성하기
 def new_comment(request, pk):
@@ -211,6 +232,7 @@ def tag_page(request, slug):
         'categories': Category.objects.all(),
         'no_category_post_count': Post.objects.filter(category=None).count
     })
+
 
 
 # FBV

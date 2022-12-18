@@ -20,6 +20,8 @@ urlpatterns = [ # ip주소/blog/
     path('<int:pk>/new_comment/', views.new_comment),  # IP주소/blog/post의 pk/new_comment/
     path('update_comment/<int:pk>/', views.CommentUpdate.as_view()),  # IP주소/blog/update_comment/1 : comment의 pk
 
+    # 18장 검색 기능 - 검색어: 'q'uery
+    path('search/<str:q>/', views.PostSearch.as_view()),  # IP주소/search/검색어
 
     # FBV
     # path('', views.index),           # views.py 의 index 함수 내 포함되어있는 path
