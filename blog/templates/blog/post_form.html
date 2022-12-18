@@ -3,7 +3,7 @@
 {% extends 'blog/base.html' %}
 
 <!-- 16장: Crispy forms 적용 -->
-{% load crispy_forms_tags %}
+<!--{ % load crispy_forms_tags %}-->
 
 <!-- post page head title -->
 {% block head_title %}
@@ -13,30 +13,31 @@
 <!-- Featured blog post-->
 {% block main_area %}
 
-<h1>Create a new Post</h1>
+<h1>Create a New Post</h1>
 <hr/>
 
 <form method="post" enctype="multipart/form-data">
     <!-- token -->
     {% csrf_token %}
-    <!--    <table> -->
+        <table>
 
     <!-- view.py의 fields > models.py에 내용 있음 -->
-        {{ form | crispy }}  <!-- form이 없으면 crispy 적용 -->
+        {{ form }}  <!-- | crispy }} form이 없으면 crispy 적용 -->
 
         <!-- select -> text 입력창으로 변환 -->
 <!--        <tr> &lt;!&ndash; , ; 으로 태그 구분 &ndash;&gt;-->
 <!--            <th><label for="id_tags">Tags</label></th>-->
 <!--            <td><input id="id_tags" type="text" name="tags_str"></td>-->
 <!--        </tr>-->
-<!--        </table>-->
+        </table>
 
-    <div id="div_id_tags_str">
-        <label for="id_tags">Tags</label>
-        <input id="id_tags" type="text" name="tags_str" class="textinput textInput form-control">
-    </div>
+<!--    <div id="div_id_tags_str">-->
+<!--        <label for="id_tags">Tags</label>-->
+<!--        <input id="id_tags" type="text" name="tags_str" class="textinput textInput form-control">-->
+<!--    </div>-->
 
     <button type="submit" class="btn btn-primary float-right">Submit</button>
+
 </form>
 
 {% endblock %}

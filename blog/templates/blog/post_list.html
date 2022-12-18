@@ -4,14 +4,14 @@
 <!-- Featured blog post-->
 {% block main_area %}
 
-<!-- 인증된 사용자인 경우 >> 포스트 생성 페이지로 가는 버튼 -->
-<!--{% if user.is_authenticated %}-->
-<!--    {% if user.is_superuser or user.is_staff %}-->
-<!--        <a class="btn btn-info float-right" href="/blog/create_post/" role="button">-->
-<!--            <i class="fas fa-pen"> New Post</i>-->
-<!--        </a>-->
-<!--    {% endif %}-->
-<!--{% endif %}-->
+<!-- 15장 Form: 인증된 사용자인 경우 >> 포스트 생성 페이지로 가는 버튼 -->
+{% if user.is_authenticated %}
+    {% if user.is_superuser or user.is_staff %}
+        <a class="btn btn-info float-right" href="/blog/create_post/" role="button">
+            <i class="fas fa-pen"> New Post</i>
+        </a>
+    {% endif %}
+{% endif %}
 
 <h2><a href="/blog/" style="color: black;">Blog</a>
     {% if category %}

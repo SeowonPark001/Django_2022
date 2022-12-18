@@ -33,44 +33,49 @@ from .serializers import postSerializer
 
 
 # 15장 : Form
-# class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
-#     model = Post
-#     fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category']  # 등록글 속성들, , 'tags'
-#
-#     # post_form.html: CreateView가 (모델명)_form.html을 템플릿으로 인지
-#     # 매개변수: 모델명: post
-#
-#     def get_context_data(self, object_list=None, **kwargs):
-#         context = super(PostCreate, self).get_context_data()
-#         context['categories'] = Category.objects.all()
-#         context['no_category_post_count'] = Post.objects.filter(category=None).count
-#         return context
-#
-#     # 폼이 올바른지 확인
-#     def form_valid(self, form):
-#         current_user = self.request.user  # 요청하는 사용자 정보
-#         if current_user.is_authenticated and (
-#                 current_user.is_superuser or current_user.is_staff):  # 인증된 사용자(+슈퍼유저/스탭)인 경우
-#             form.instance.author = current_user  # 해당 사용자를 폼에 해당하는 작성자로 간주
-#             response = super(PostCreate, self).form_valid()
-#             tags_str = self.POST.get('tags_str')
-#             if tags_str:
-#                 tags_str = tags_str.strip()
-#                 tags_str, is_created = tags_str.replace(',',';') # true: / false: 원래 애방
-#                 tag_list = tags_str.split(';')
-#                 for t in tag_list:
-#                     t = t.strip()
-#                     tag, is_tag_created = Tag.objects.get_or_create(name=t)
-#                     if is_tag_created:
-#                         tag.slug = slugify(t, allow_unicode=True)
-#                         tag.save()
-#                     self.object.tags.add(tag)
-#             return response # super(PostCreate, self).form_valid(form)
-#         else:
-#             return redirect('/blog/')  # 인증된 사용자가 아닌 경우 blog 페이지로 이동
-#
-#     def test_func(self):
-#         return self.request.user.is_superuser or self.request.user.is_staff  # 둘 중 하나 해당 시 true 반환
+class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    model = Post
+    fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category']  # 등록글 속성들, , 'tags'
+
+    # post_form.html: CreateView가 (모델명)_form.html을 템플릿으로 인지
+
+    def get_context_data(self, object_list=None, **kwargs):
+        context = super(PostCreate, self).get_context_data()
+        context['categories'] = Category.objects.all()
+        context['no_category_post_count'] = Post.objects.filter(category=None).count
+        return context
+
+    # 폼이 올바른지 확인 (LoginRequiredMixin)
+    def form_valid(self, form):
+        # 요청하는 사용자 정보
+        current_user = self.request.user
+
+        # 인증된 사용자(+슈퍼유저/스탭 (UserPassesTestMixin))인 경우
+        if current_user.is_authenticated and (current_user.is_superuser or current_user.is_staff):
+            # 해당 사용자를 폼에 해당하는 작성자로 간주
+            form.instance.author = current_user
+            return super(PostCreate, self).form_valid(form)
+
+            # response = super(PostCreate, self).form_valid()
+            # tags_str = self.POST.get('tags_str')
+            # if tags_str:
+            #     tags_str = tags_str.strip()
+            #     tags_str, is_created = tags_str.replace(',',';') # true: / false: 원래 애방
+            #     tag_list = tags_str.split(';')
+            #     for t in tag_list:
+            #         t = t.strip()
+            #         tag, is_tag_created = Tag.objects.get_or_create(name=t)
+            #         if is_tag_created:
+            #             tag.slug = slugify(t, allow_unicode=True)
+            #             tag.save()
+            #         self.object.tags.add(tag)
+            # return response # super(PostCreate, self).form_valid(form)
+        else:
+            return redirect('/blog/')  # 인증된 사용자가 아닌 경우 blog 페이지로 이동
+
+    # (UserPassesTestMixin)
+    def test_func(self):
+        return self.request.user.is_superuser or self.request.user.is_staff  # 둘 중 하나 해당 시 true 반환
 
 
 

@@ -13,7 +13,7 @@ urlpatterns = [ # ip주소/blog/
     path('tag/<str:slug>/', views.tag_page),    # IP주소/blog/tag/slug
 
     # 15장 Form
-    # path('create_post/', views.PostCreate.as_view()),   # IP주소/blog/create_post
+    path('create_post/', views.PostCreate.as_view()),   # IP주소/blog/create_post
     # path('update_post/<int:pk>/', views.PostUpdate.as_view()),  # IP주소/blog/update_post/1
 
     # 16장? Comment
